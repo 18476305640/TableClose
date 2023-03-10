@@ -60,7 +60,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                 waitTime -= oneWait;
                 // 关闭标签的定时器
                 if(waitTime <= 0) chrome.tabs.remove(tabId);
-            },oneWait)
+            }, )
         });
         
     }

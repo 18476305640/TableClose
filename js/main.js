@@ -4,7 +4,7 @@ $(function() {
         $("#show").html('');
         for(let item of items ) {
             $("#show").append(`
-                <p class='item'><span>${item}</span><button class='del'>删除</button></p>
+                <p class='item'><span title="${item}">${item}</span><button class='del'>删除</button></p>
             `)
 
         }
