@@ -30,8 +30,7 @@ function getTabWindow(tabId, callback) {
     });
 }
 function tabScript() {
-    alert(this.document.title)
-
+    // TODO
 }
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     // 模拟tab内部
@@ -48,7 +47,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
     // 添加定时器关闭tab
     let timer = null;
-    let titleTimer = null;
     function delayerClose () {
         // 在开启新的定时任务时，清理上一次的
         closeTimer();
@@ -57,15 +55,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         chrome.tabs.get(tabId, function(tab) {
             // 标签标题
             var title = tab.title;
-            titleTimer = setInterval(function() {
+            timer = setInterval(function() {
                 setTabTitle(`${waitTime/1000} | ${title}`);
                 waitTime -= oneWait;
+                // 关闭标签的定时器
+                if(waitTime <= 0) chrome.tabs.remove(tabId);
             },oneWait)
         });
-        // 关闭标签的定时器
-        timer = setTimeout(function () {
-            chrome.tabs.remove(tabId);
-        }, waitTime);
         
     }
     // 取消定时器
@@ -75,8 +71,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             debugger
             var titleArr = tab.title.split("|");
             if(titleArr.length > 1) {
-                arr.splice(0,1); // 删除第一个
-                let title = arr.join().trim();
+                titleArr.splice(0,1); // 删除第一个
+                let title = titleArr.join().trim();
                 chrome.tabs.executeScript(tabId, {
                     code: `document.title = "${title}";`
                 });
@@ -85,8 +81,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         // 关闭定时器
         if(timer != null ) clearInterval(timer);
         timer = null;
-        if(titleTimer != null ) clearInterval(titleTimer);
-        titleTimer = null;
         
     }
     
