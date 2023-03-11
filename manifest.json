@@ -22,7 +22,6 @@
       "webRequestBlocking",
       "tabs",
       "<all_urls>",
-      "*://*/*",
       "storage",
       "sync"
     ],
