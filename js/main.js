@@ -1,10 +1,11 @@
+import rule from './rule.js';
 $(function() {
     // 刷新列表
     function refreshList(items) {
         $("#show").html('');
         for(let item of items ) {
             $("#show").append(`
-                <p class='item'><span title="${item}">${item}</span><button class='del'>删除</button></p>
+                <p class='item'><span title="${item}">${item}</span><button class='del'>x</button></p>
             `)
 
         }
@@ -26,9 +27,7 @@ $(function() {
         }else{
             // 赋于初始配置
             config = {
-                retentionRules: [
-                    "www.baidu.com"
-                ]
+                retentionRules: rule
             }
             // 保存配置
             saveConfig(config);
